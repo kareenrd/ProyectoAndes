@@ -1,0 +1,12 @@
+.btn_crud .btn {
+    margin: 5px 10px;
+}
+
+.nav {
+    cursor: pointer;
+}
+
+thead th,
+#body_modal label {
+    text-transform: capitalize;
+}
