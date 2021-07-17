@@ -26,6 +26,9 @@ if(sizeof($info) > 0){
         case 'D1':
             $res = delete_item($mysqli, $info['info']);
             break;
+        case 'L1':
+            $res = login($mysqli, $info['info']);
+            break;
         
         default:
             # code...
@@ -33,6 +36,27 @@ if(sizeof($info) > 0){
         
     }
     print_r($res);
+}
+
+function login($mysqli, $data){
+    //print_r($data['fields']);
+    $email = '';
+    $pwd = '';
+    foreach ($data['fields'] as $key => $value) {
+        if($value['name'] == 'email'){
+            $email = $value['value'];
+        } else {
+            $pwd = $value['value'];
+        }
+    }
+
+    $sql = 'SELECT * FROM users WHERE email = \''.$email.'\' AND pass = \''.$pwd.'\'';
+    //echo $sql;
+    $resultado = $mysqli->query($sql);
+
+    $res =  json_encode($resultado->fetch_all(MYSQLI_ASSOC));
+    return $res;
+
 }
 
 function delete_item ($mysqli, $data){

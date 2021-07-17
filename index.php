@@ -22,7 +22,7 @@
 <body>
     <div class="jumbotron text-center">
         <h1>Proyecto Andes</h1>
-        <ul class="nav justify-content-center">
+        <ul class="nav justify-content-center" id="nav_list" style="display: none;">
             <li class="nav-item">
                 <a class="nav-link" onclick="get_info('client')">Client</a>
             </li>
@@ -32,14 +32,53 @@
             <li class="nav-item">
                 <a class="nav-link" onclick="get_info('cities')">Cities</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link">Login</a>
-            </li>
         </ul>
     </div>
 
     <div class="container">
-        <div class="row">
+        <div class="alert alert-success" id="alert_login_ok" style="display: none;text-align: center;">
+            <strong>Bienvenido!</strong> Ingreso correcto.
+        </div>
+        <div class="alert alert-danger" id="alert_login_fail" style="display: none;text-align: center;">
+            <strong>Error!</strong> Por favor revise sus credenciales.
+        </div>
+        <div style="width: 100%;text-align: center;" id="loader">
+            <br>
+            <div class="spinner-grow text-success"></div>
+            <div class="spinner-grow text-success"></div>
+            <div class="spinner-grow text-success"></div>
+            <div class="spinner-grow text-success"></div>
+            <div class="spinner-grow text-success"></div>
+            <br>
+        </div>
+        <div class="row" id="login_tmp">
+
+            <div class="card" style="width:400px">
+                <img class="card-img-top" src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png" alt="Card image" style="width:100%">
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    <div class="card-text">
+                        <form id="login_form">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-fw fa-user"></i></span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Username" name="email" value="prueba1@prueba.com">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-fw fa-lock"></i></span>
+                                </div>
+                                <input type="password" class="form-control" placeholder="Password" name="pwd" value="1234567">
+                            </div>
+                        </form>
+                    </div>
+                    <a onclick="login()" class="btn btn-primary">Ingresar</a>
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class="row" id="login_tmp">
 
         </div>
         <div class="row">
@@ -68,4 +107,3 @@
 <?php 
 include 'server.php';
 ?>
-

@@ -10,3 +10,13 @@ thead th,
 #body_modal label {
     text-transform: capitalize;
 }
+
+#login_tmp {
+    align-items: center;
+    text-align: center;
+    margin-left: 30%;
+}
+
+#loader {
+    display: none;
+}

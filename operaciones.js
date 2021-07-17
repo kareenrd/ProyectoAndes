@@ -98,7 +98,7 @@ function get_info(tabla) {
 }
 
 function create_item(tabla) {
-    console.log('se crea en: ' + tabla, titulos);
+    //console.log('se crea en: ' + tabla, titulos);
     $("#modal_acc").modal();
 
     document.getElementById('title_modal').innerHTML = 'Crear elemento para ' + tabla;
@@ -121,7 +121,7 @@ function create_item(tabla) {
                 if (titulos[i] == 'ciudad') {
 
                     for (var j in res) {
-                        console.log(res[j].name);
+                        //console.log(res[j].name);
                         option += '<option value="' + res[j].name + '">' + res[j].name + '</option>';
                     }
                     tag +=
@@ -162,11 +162,11 @@ function create_item(tabla) {
 
 function serialize(id_form, id_item = null) {
     var fields = $('#' + id_form).serializeArray();
-    console.log('serialize: ', fields);
+    //console.log('serialize: ', fields);
     var titulo = JSON.stringify(titulos);
 
     var op = id_form.split('_');
-    console.log(op);
+    //console.log(op);
 
     var opcion = (op[1] == 'edit') ? 'C2' : 'C1';
 
@@ -183,7 +183,7 @@ function serialize(id_form, id_item = null) {
             }
         },
         success: function(response) {
-            console.log(response);
+            //console.log(response);
             if (response == 1) {
                 document.getElementById('alerta_modal_ok').style.display = 'block';
                 setTimeout(function() {
@@ -234,7 +234,7 @@ function edit_info(id) {
                                 '</div>';
                         } else {
                             for (var j in obj[i]) {
-                                console.log(obj[i][j], '-', j);
+                                //console.log(obj[i][j], '-', j);
                                 if (j == titulos[t]) {
                                     tag +=
                                         '<div class="form-group">' +
@@ -268,15 +268,14 @@ function edit_info(id) {
 
 function delete_info(id) {
     $("#modal_acc").modal();
-    document.getElementById('body_modal').innerHTML = 'el id: ' + id;
     document.getElementById('title_modal').innerHTML = 'Eliminar elemento para ' + tabla_;
     var tag = '';
     for (var i in obj) {
         if (parseInt(obj[i].id) == id) {
-            console.log(obj[i]);
+            //console.log(obj[i]);
             for (var t = 1; t < titulos.length; t++) {
                 for (var j in obj[i]) {
-                    console.log(obj[i][j], '-', j);
+                    //console.log(obj[i][j], '-', j);
                     if (j == titulos[t]) {
                         tag +=
                             '<div class="form-group">' +
@@ -320,7 +319,7 @@ function delete_ajax(id_item) {
             }
         },
         success: function(response) {
-            console.log(response);
+            //console.log(response);
             if (response == 1) {
                 document.getElementById('alerta_modal_ok').style.display = 'block';
                 setTimeout(function() {
@@ -343,4 +342,40 @@ function search(params) {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 
+}
+
+function login() {
+    var fields = $('#login_form').serializeArray();
+    //console.log('serialize: ', fields);
+
+    $.ajax({
+        type: "POST",
+        url: 'server.php',
+        data: {
+            opcion: 'L1',
+            info: {
+                fields: fields
+            }
+        },
+        success: function(response) {
+            var res = JSON.parse(response);
+            //console.log(res.length);
+            if (res.length >= 1) {
+                document.getElementById('alert_login_ok').style.display = 'block';
+                document.getElementById('loader').style.display = 'block';
+
+                setTimeout(function() {
+                    document.getElementById('nav_list').style.display = 'flex';
+                    document.getElementById('login_tmp').style.display = 'none';
+                    document.getElementById('alert_login_ok').style.display = 'none';
+                    document.getElementById('loader').style.display = 'none';
+                }, 2000);
+            } else {
+                document.getElementById('alert_login_fail').style.display = 'block';
+                document.getElementById('nav_list').style.display = 'none';
+                document.getElementById('loader').style.display = 'none';
+            }
+
+        }
+    });
 }
