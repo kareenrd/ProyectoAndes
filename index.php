@@ -1,3 +1,7 @@
+<?php 
+include 'server.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +23,7 @@
     <title>Proyecto Andes</title>
 </head>
 
-<body>
+<body onload = "install_data();">
     <div class="jumbotron text-center">
         <h1>Proyecto Andes</h1>
         <ul class="nav justify-content-center" id="nav_list" style="display: none;">
@@ -104,6 +108,3 @@
 
 </html>
 
-<?php 
-include 'server.php';
-?>

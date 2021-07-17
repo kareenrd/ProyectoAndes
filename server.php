@@ -1,12 +1,8 @@
 <?php
-
-//$enlace = mysqli_connect("localhost", "root", '', "proyecto_andes");
-$mysqli = new mysqli("localhost", "root", "", "proyecto_andes");
-
-//print_r($mysqli);
+$mysqli = mysqli_connect("localhost", "root", "", "proyecto_andes");
 
 $info = $_POST;
-//print_r(sizeof($info));
+//print_r($info);
 
 if(sizeof($info) > 0){
     $res = false;
@@ -29,19 +25,38 @@ if(sizeof($info) > 0){
         case 'L1':
             $res = login($mysqli, $info['info']);
             break;
+        case 'I1':
+            $res = install_data($mysqli);
+            break;
         
         default:
-            # code...
+            
             break;
         
     }
     print_r($res);
 }
 
+function install_data($mysqli){
+    $ya_entro = 0;
+    $install = file_get_contents('instalacion.sql');
+
+    $tablas = $mysqli->query('SELECT 1 FROM client');
+    if(empty($tablas) == 1){
+        $resultado = ($mysqli->multi_query($install) == 1 ) ? 1:0;
+    } else {
+        $resultado = 'false';
+    }
+
+    
+    return $resultado;
+}
+
 function login($mysqli, $data){
     //print_r($data['fields']);
     $email = '';
     $pwd = '';
+    $resultado = '';
     foreach ($data['fields'] as $key => $value) {
         if($value['name'] == 'email'){
             $email = $value['value'];
@@ -50,12 +65,12 @@ function login($mysqli, $data){
         }
     }
 
-    $sql = 'SELECT * FROM users WHERE email = \''.$email.'\' AND pass = \''.$pwd.'\'';
-    //echo $sql;
-    $resultado = $mysqli->query($sql);
-
-    $res =  json_encode($resultado->fetch_all(MYSQLI_ASSOC));
+    $sql = 'SELECT * FROM users WHERE email = \''.$email.'\' AND pass = \''.$pwd.'\';';
+    $resultado = mysqli_query($mysqli, $sql, MYSQLI_USE_RESULT);
+    $res =  json_encode(mysqli_fetch_row($resultado));
+    
     return $res;
+    
 
 }
 

@@ -379,3 +379,17 @@ function login() {
         }
     });
 }
+
+function install_data() {
+    $.ajax({
+        type: "POST",
+        url: 'server.php',
+        data: {
+            opcion: 'I1',
+        },
+        success: function(response) {
+            var res = JSON.parse(response);
+            console.log(response);
+        }
+    });
+}
